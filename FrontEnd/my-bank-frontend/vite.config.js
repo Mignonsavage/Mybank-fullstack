@@ -9,7 +9,7 @@ export default defineConfig({
 
   server: {
 
-    host: '0.0.0.0',  // Écoute sur toutes les interfaces
+    host: '0.0.0.0',
 
     port: 5173,
 
