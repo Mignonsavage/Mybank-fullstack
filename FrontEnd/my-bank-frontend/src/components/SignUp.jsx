@@ -33,6 +33,15 @@ const styles = {
         outline: 'none',
         marginBottom: '20px',
     },
+    Checkbox: {
+        display: 'flex',
+        alignItems: 'center',
+        fontFamily: 'Open Sans',
+        fontSize: '14px',
+        fontWeight: 400,
+        color: '#94a3b8',
+        marginBottom: '20px',
+    },
     Button: {
         cursor: 'pointer',
         width: '436px',
@@ -56,15 +65,30 @@ const SignUp = () => {
         name: '',
         email: '',
         password: '',
+        confirmPassword: '',
+        agreeToTerms: false,
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        const { name, value, type, checked } = e.target;
+        setFormData({
+            ...formData,
+            [name]: type === 'checkbox' ? checked : value, // Gère les champs checkbox
+        });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (formData.password !== formData.confirmPassword) {
+            alert('The two passwords don\'t match.');
+            return;
+        }
+
+        if (!formData.agreeToTerms) {
+            alert('You should accept the terms and conditions');
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:8000/api/register', {
                 method: 'POST',
@@ -82,7 +106,7 @@ const SignUp = () => {
     return (
         <div style={styles.Card}>
             <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
-                <h2 style={{ color: 'white' }}>Create Your Mybank account</h2>
+                <h2 style={{ color: 'white' }}>Create Your Mybank Account</h2>
                 <input
                     type="text"
                     name="name"
@@ -102,11 +126,31 @@ const SignUp = () => {
                 <input
                     type="password"
                     name="password"
-                    placeholder="Mot de passe"
+                    placeholder="Password"
                     value={formData.password}
                     onChange={handleChange}
                     style={styles.Input}
                 />
+                <input
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="Confirm the password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    style={styles.Input}
+                />
+                <div style={styles.Checkbox}>
+                    <input
+                        type="checkbox"
+                        name="agreeToTerms"
+                        checked={formData.agreeToTerms}
+                        onChange={handleChange}
+                        style={{ marginRight: '10px' }}
+                    />
+                    <label style={{ color: '#94a3b8' }}>
+                        I agree to the terms and conditions
+                    </label>
+                </div>
                 <button type="submit" style={styles.Button}>
                     Sign Up
                 </button>
