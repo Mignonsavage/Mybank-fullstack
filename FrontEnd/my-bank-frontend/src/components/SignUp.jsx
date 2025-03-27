@@ -2,17 +2,20 @@ import React, { useState } from 'react';
 
 const styles = {
     Card: {
-        top: '178px',
-        left: '470px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
         width: '500px',
         height: 'auto',
         backgroundColor: '#323232',
         borderRadius: '24px',
         boxShadow: '2px 2px 4px rgba(255,255,255,0.1)',
         padding: '20px',
-        position: 'relative',
-        margin: '0 auto',
-        transform: 'translateY(50%)',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
     },
     Input: {
         width: '436px',
@@ -28,19 +31,23 @@ const styles = {
         fontWeight: 400,
         lineHeight: '16px',
         outline: 'none',
-        marginBottom: '20px', // Espacement entre les champs
+        marginBottom: '20px',
     },
     Button: {
-        width: '436px',
-        height: '44px',
-        border: 'none',
-        borderRadius: '24px',
-        backgroundColor: '#4CAF50', // Couleur du bouton
-        color: '#ffffff',
-        fontSize: '14px',
-        fontFamily: 'Open Sans',
-        fontWeight: 700,
         cursor: 'pointer',
+        width: '436px',
+        height: '52px',
+        padding: '0px 8px',
+        border: '0',
+        boxSizing: 'border-box',
+        borderRadius: '24px',
+        backgroundColor: '#ff992b',
+        color: '#ffffff',
+        fontSize: '18px',
+        fontFamily: 'Open Sans',
+        fontWeight: 600,
+        lineHeight: '21px',
+        outline: 'none',
     },
 };
 
@@ -65,7 +72,7 @@ const SignUp = () => {
                 body: JSON.stringify(formData),
             });
             const data = await response.json();
-            alert(data.message || 'Inscription réussie !');
+            alert(data.message || 'Inscription réussie!');
         } catch (error) {
             alert('Une erreur est survenue. Veuillez réessayer.');
             console.error(error);
@@ -75,7 +82,7 @@ const SignUp = () => {
     return (
         <div style={styles.Card}>
             <form onSubmit={handleSubmit} style={{ textAlign: 'center' }}>
-                <h2 style={{ color: 'white' }}>Inscription</h2>
+                <h2 style={{ color: 'white' }}>Create Your Mybank account</h2>
                 <input
                     type="text"
                     name="name"
@@ -101,7 +108,7 @@ const SignUp = () => {
                     style={styles.Input}
                 />
                 <button type="submit" style={styles.Button}>
-                    S'inscrire
+                    Sign Up
                 </button>
             </form>
         </div>
